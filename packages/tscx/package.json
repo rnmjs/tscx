@@ -1,0 +1,23 @@
+{
+  "name": "@rnm/tscx",
+  "version": "0.0.0",
+  "description": "A tsc wrapper with many convenient features.",
+  "keywords": [
+    "typescript",
+    "tsc",
+    "nodemon",
+    "copyfiles",
+    "rimraf",
+    "rm",
+    "watch",
+    "tsc-watch",
+    "dev"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rnmjs/tscx.git"
+  },
+  "license": "MIT",
+  "author": "hellozmj@qq.com",
+  "type": "module"
+}

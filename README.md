@@ -1,3 +1,1 @@
-# tscx(WIP)
-
-A tsc wrapper with many convenient features.
+./packages/tscx/README.md
