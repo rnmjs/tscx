@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r build",
+    "install": "pnpm build",
+    "postinstall": "git-validator install",
+    "release": "changeset publish",
+    "style": "git-validator",
+    "style:update": "git-validator -u",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "@changesets/cli": "2.27.1",
+    "git-validator": "0.15.12",
+    "typescript": "5.4.5"
+  },
+  "packageManager": "pnpm@8.15.4",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": "^8.0.0"
+  }
+}
