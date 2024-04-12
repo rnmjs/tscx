@@ -20,6 +20,13 @@
   "license": "MIT",
   "author": "hellozmj@qq.com",
   "type": "module",
+  "dependencies": {
+    "chokidar": "3.6.0",
+    "commander": "12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.7"
+  },
   "peerDependencies": {
     "typescript": "*"
   }
