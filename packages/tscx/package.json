@@ -19,5 +19,8 @@
   },
   "license": "MIT",
   "author": "hellozmj@qq.com",
-  "type": "module"
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "*"
+  }
 }
