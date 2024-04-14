@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.0.2
+
+### Patch Changes
+
+- 1eb9fb3: fix: fix bin module, use cjs
+
 ## 0.0.1
 
 ### Patch Changes
