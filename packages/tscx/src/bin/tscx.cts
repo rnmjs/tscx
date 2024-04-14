@@ -1,1 +1,1 @@
-import "./tscx.js";
+import("./tscx.js");
