@@ -11,7 +11,8 @@
     "rm",
     "watch",
     "tsc-watch",
-    "dev"
+    "node-dev",
+    "restart"
   ],
   "repository": {
     "type": "git",
@@ -20,6 +21,12 @@
   "license": "MIT",
   "author": "hellozmj@qq.com",
   "type": "module",
+  "bin": {
+    "tscx": "./dist/bin/tscx.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "chokidar": "3.6.0",
     "commander": "12.0.0"
