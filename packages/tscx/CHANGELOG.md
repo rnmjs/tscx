@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.0.3
+
+### Patch Changes
+
+- 406a552: fix: fix bin importation
+
 ## 0.0.2
 
 ### Patch Changes
