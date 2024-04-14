@@ -22,7 +22,7 @@
   "author": "hellozmj@qq.com",
   "type": "module",
   "bin": {
-    "tscx": "./dist/bin/tscx.js"
+    "tscx": "./dist/bin/tscx.cjs"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json"
