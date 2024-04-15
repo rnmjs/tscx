@@ -36,6 +36,7 @@ export class Action {
 
   private cb(filepath?: string) {
     console.log("Recompile for the file updated", filepath);
+    // user edit non-tsconfig files
     if (
       !filepath ||
       path.resolve(process.cwd(), filepath) !==
@@ -44,6 +45,7 @@ export class Action {
       return this.compiler.exec();
     }
 
+    // user edit tsconfig file
     try {
       this.compiler.refreshTsConfig();
     } catch (e) {

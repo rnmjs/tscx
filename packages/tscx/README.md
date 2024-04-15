@@ -40,7 +40,7 @@ Happy hacking!
 npm install typescript @nrm/tscx -D
 ```
 
-## Usages
+## Usage
 
 ```sh
 # Equivalent to `npx tsc`

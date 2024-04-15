@@ -14,24 +14,26 @@ const TSC_PATH = path.resolve(
   "tsc",
 );
 
+function spawnNode(...args: string[]) {
+  return spawn("node", args, { stdio: "inherit" });
+}
+
 export function remove(filepath: string) {
   console.log("Remove", filepath);
-  return spawn("node", [REMOVE_PATH, filepath], { stdio: "inherit" });
+  return spawnNode(REMOVE_PATH, filepath);
 }
 
 export function tsc(options: { project: string }) {
   console.log("Tsc", options);
-  return spawn("node", [TSC_PATH, "--project", options.project], {
-    stdio: "inherit",
-  });
+  return spawnNode(TSC_PATH, "--project", options.project);
 }
 
 export function copyfiles(rootDir: string, outDir: string) {
   console.log("Copyfiles", rootDir, "=>", outDir);
-  return spawn("node", [COPYFILES_PATH, rootDir, outDir], { stdio: "inherit" });
+  return spawnNode(COPYFILES_PATH, rootDir, outDir);
 }
 
 export function exec(filepath: string) {
   console.log("Execute", filepath);
-  return spawn("node", [filepath], { stdio: "inherit" });
+  return spawnNode(filepath);
 }
