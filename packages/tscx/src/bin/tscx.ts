@@ -29,7 +29,7 @@ new Command()
   .option("-w, --watch", "Watch input files.", false)
   .option(
     "-r, --remove",
-    "Remove output folder before before every compilation.",
+    "Remove output folder before every compilation.",
     false,
   )
   .option(
@@ -39,7 +39,7 @@ new Command()
   )
   .option(
     "-e, --exec <path>",
-    "Execute the specified js file after compilation success",
+    "Execute or restart the specified js file after every successful compilation.",
   )
   .action((options) => {
     new Action(options).start();
