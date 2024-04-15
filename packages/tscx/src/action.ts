@@ -8,6 +8,8 @@ interface TscxOptions extends CompilerOptions {
 }
 
 export class Action {
+  private lastUpdateTsconfigTime = Date.now();
+
   private readonly compiler;
   private watcher?: FSWatcher;
   constructor(private readonly options: TscxOptions) {
@@ -23,11 +25,15 @@ export class Action {
             .map((i) => path.resolve(process.cwd(), i))
             .concat(path.resolve(process.cwd(), this.options.project));
 
-    this.watcher = chokidar.watch(watchFiles, {
-      ignored: ["**/node_modules/**", "**/.git/**", this.compiler.getOutDir()],
-      ignoreInitial: true,
-    });
-    this.watcher
+    this.watcher = chokidar
+      .watch(watchFiles, {
+        ignored: [
+          "**/node_modules/**",
+          "**/.git/**",
+          this.compiler.getOutDir(),
+        ],
+        ignoreInitial: true,
+      })
       .on("add", (filepath) => this.cb(filepath))
       .on("unlink", (filepath) => this.cb(filepath))
       .on("change", (filepath) => this.cb(filepath))
@@ -35,7 +41,7 @@ export class Action {
   }
 
   private cb(filepath?: string) {
-    console.log("Recompile for the file updated", filepath);
+    console.log("File changes detected", filepath);
     // user edit non-tsconfig files
     if (
       !filepath ||
@@ -46,6 +52,10 @@ export class Action {
     }
 
     // user edit tsconfig file
+    const now = Date.now();
+    if (now - this.lastUpdateTsconfigTime < 1000) {
+      return;
+    }
     try {
       this.compiler.refreshTsConfig();
     } catch (e) {
@@ -55,15 +65,12 @@ export class Action {
       );
       return;
     }
-    this.watcher
-      ?.close()
-      .then(() => {
-        this.setupWatcher();
-      })
-      .catch((e) => {
-        console.error("Close watcher fail!", e);
-        process.exit(1);
-      });
+    this.watcher?.close().catch((e) => {
+      console.error("Close watcher fail!", e);
+      process.exit(1);
+    });
+    this.setupWatcher();
+    this.lastUpdateTsconfigTime = now;
   }
 
   start() {
