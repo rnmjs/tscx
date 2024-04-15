@@ -34,7 +34,7 @@ export class Compiler {
     this.tsconfig = this.getTsConfig();
   }
 
-  exec() {
+  compile() {
     const id = Date.now() + "_" + Math.random().toString(36).slice(2);
     this.id = id;
 
@@ -55,6 +55,9 @@ export class Compiler {
   }
 
   private execTasks(id: string) {
+    if (this.id !== id) {
+      return;
+    }
     const outDir = this.getOutDir();
     const rootDir = this.getRootDir();
 

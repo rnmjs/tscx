@@ -48,7 +48,7 @@ export class Action {
       path.resolve(process.cwd(), filepath) !==
         path.resolve(process.cwd(), this.options.project)
     ) {
-      return this.compiler.exec();
+      return this.compiler.compile();
     }
 
     // user edit tsconfig file
@@ -75,7 +75,7 @@ export class Action {
 
   start() {
     if (!this.options.watch) {
-      this.compiler.exec();
+      this.compiler.compile();
       return;
     }
 
