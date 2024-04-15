@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.0.5
+
+### Patch Changes
+
+- b6ea97e: fix: improve stability when update tsconfig
+
 ## 0.0.4
 
 ### Patch Changes
