@@ -1,3 +1,4 @@
+// this file should not have `async` and `await`
 // eslint-disable-next-line n/no-sync
 import { type ChildProcess, execSync } from "node:child_process";
 import path from "node:path";

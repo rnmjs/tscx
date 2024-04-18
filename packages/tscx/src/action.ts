@@ -1,3 +1,4 @@
+// this file should not have `async` and `await`
 import path from "node:path";
 import process from "node:process";
 import chokidar, { type FSWatcher } from "chokidar";
