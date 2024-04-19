@@ -25,7 +25,8 @@
     "tscx": "./dist/bin/tscx.cjs"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest"
   },
   "dependencies": {
     "chokidar": "3.6.0",
