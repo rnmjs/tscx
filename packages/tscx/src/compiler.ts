@@ -1,6 +1,5 @@
 // this file should not have `async` and `await`
-// eslint-disable-next-line n/no-sync
-import { type ChildProcess, execSync } from "node:child_process";
+import childProcess, { type ChildProcess } from "node:child_process";
 import path from "node:path";
 import process from "node:process";
 import type ts from "typescript";
@@ -104,8 +103,10 @@ export class Compiler {
       "tsc",
     );
     const cmd = `node ${tscPath} --showConfig --project ${this.options.project}`;
-    // eslint-disable-next-line n/no-sync
-    const config: TsConfig = JSON.parse(execSync(cmd).toString("utf8"));
+    const config: TsConfig = JSON.parse(
+      // eslint-disable-next-line n/no-sync
+      childProcess.execSync(cmd).toString("utf8"),
+    );
     if (
       !config.compilerOptions ||
       Object.keys(config.compilerOptions).length <= 0
