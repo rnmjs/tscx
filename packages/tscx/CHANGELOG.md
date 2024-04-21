@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.0.6
+
+### Patch Changes
+
+- 9e11956: chore: bump version
+
 ## 0.0.5
 
 ### Patch Changes
