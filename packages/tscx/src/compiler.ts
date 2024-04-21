@@ -81,6 +81,7 @@ export class Compiler {
       }
       this.currentSubprocess = currentTask();
       this.currentSubprocess.on("close", (code, signal) => {
+        // manually exiting or unexpected exception will not execute next task
         if (code || signal) {
           return;
         }
