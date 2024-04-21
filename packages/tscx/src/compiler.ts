@@ -23,6 +23,8 @@ export class Compiler {
   private id = "";
   private currentSubprocess?: childProcess.ChildProcess;
   private tsconfig: TsConfig;
+  private rootDir: string;
+  private outDir: string;
 
   constructor(private readonly options: CompilerOptions) {
     // setup options
@@ -32,6 +34,8 @@ export class Compiler {
     }
     // setup tsconfig
     this.tsconfig = this.getTsConfig();
+    this.rootDir = this.getRootDir();
+    this.outDir = this.getOutDir();
   }
 
   compile() {
@@ -58,12 +62,10 @@ export class Compiler {
     if (this.id !== id) {
       return;
     }
-    const outDir = this.getOutDir();
-    const rootDir = this.getRootDir();
 
-    const removeTask = () => remove(outDir);
+    const removeTask = () => remove(this.outDir);
     const tscTask = () => tsc({ project: this.options.project });
-    const copyfilesTask = () => copyfiles(rootDir, outDir);
+    const copyfilesTask = () => copyfiles(this.rootDir, this.outDir);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const execTask = () => exec(this.options.exec!);
 
@@ -93,6 +95,8 @@ export class Compiler {
 
   refreshTsConfig() {
     this.tsconfig = this.getTsConfig();
+    this.rootDir = this.getRootDir();
+    this.outDir = this.getOutDir();
   }
 
   private getTsConfig(): TsConfig {
