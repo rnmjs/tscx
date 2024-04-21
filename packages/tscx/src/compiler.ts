@@ -1,5 +1,5 @@
 // this file should not have `async` and `await`
-import childProcess, { type ChildProcess } from "node:child_process";
+import childProcess from "node:child_process";
 import path from "node:path";
 import process from "node:process";
 import type ts from "typescript";
@@ -21,7 +21,7 @@ export interface TsConfig {
 
 export class Compiler {
   private id = "";
-  private currentSubprocess?: ChildProcess;
+  private currentSubprocess?: childProcess.ChildProcess;
   private tsconfig: TsConfig;
 
   constructor(private readonly options: CompilerOptions) {

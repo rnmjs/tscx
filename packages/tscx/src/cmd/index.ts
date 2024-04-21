@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+import childProcess from "node:child_process";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -15,7 +15,7 @@ const TSC_PATH = path.resolve(
 );
 
 function spawnNode(...args: string[]) {
-  return spawn("node", args, { stdio: "inherit" });
+  return childProcess.spawn("node", args, { stdio: "inherit" });
 }
 
 export function remove(filepath: string) {
