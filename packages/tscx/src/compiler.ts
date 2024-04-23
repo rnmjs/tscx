@@ -58,24 +58,22 @@ export class Compiler {
     });
   }
 
+  private getTasks(): Array<() => childProcess.ChildProcess> {
+    const { project, remove: rm, copyfiles: cp, exec: ex } = this.options;
+    return [
+      ...(rm ? [() => remove(this.outDir)] : []),
+      () => tsc({ project }),
+      ...(cp ? [() => copyfiles(this.rootDir, this.outDir)] : []),
+      ...(ex ? [() => exec(ex)] : []),
+    ];
+  }
+
   private execTasks(id: string) {
     if (this.id !== id) {
       return;
     }
 
-    const removeTask = () => remove(this.outDir);
-    const tscTask = () => tsc({ project: this.options.project });
-    const copyfilesTask = () => copyfiles(this.rootDir, this.outDir);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const execTask = () => exec(this.options.exec!);
-
-    const tasks = [
-      ...(this.options.remove ? [removeTask] : []),
-      tscTask,
-      ...(this.options.copyfiles ? [copyfilesTask] : []),
-      ...(this.options.exec ? [execTask] : []),
-    ];
-
+    const tasks = this.getTasks();
     const execNextTask = (index = 0) => {
       const currentTask = tasks[index];
       if (!currentTask || this.id !== id) {
