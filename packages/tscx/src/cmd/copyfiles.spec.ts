@@ -12,6 +12,10 @@ const TMP2 = path.resolve(os.tmpdir(), "tscx_tmp_for_copy2");
 const scrDirPath2 = path.resolve(TMP2, "src");
 const distDirPath2 = path.resolve(TMP2, "dist");
 
+const TMP3 = path.resolve(os.tmpdir(), "tscx_tmp_for_copy3");
+const scrDirPath3 = path.resolve(TMP3, "src");
+const distDirPath3 = path.resolve(TMP3, "dist");
+
 describe("copyfiles", () => {
   beforeEach(async () => {
     await fs.mkdir(TMP1);
@@ -20,10 +24,14 @@ describe("copyfiles", () => {
     await fs.mkdir(TMP2);
     await fs.mkdir(scrDirPath2);
     await fs.mkdir(distDirPath2);
+    await fs.mkdir(TMP3);
+    await fs.mkdir(scrDirPath3);
+    await fs.mkdir(distDirPath3);
   });
   afterEach(async () => {
     await fs.rm(TMP1, { force: true, recursive: true });
     await fs.rm(TMP2, { force: true, recursive: true });
+    await fs.rm(TMP3, { force: true, recursive: true });
   });
 
   it("should copy files when src and dist are peers", async () => {
@@ -102,5 +110,16 @@ describe("copyfiles", () => {
     expect(
       await fs.readFile(path.resolve(distDirPath2, "src", "a"), "utf8"),
     ).toBe("foo");
+  });
+
+  it("should copy if destination folder is empty", async () => {
+    await fs.mkdir(path.resolve(scrDirPath3, "foo"));
+    await fs.writeFile(path.resolve(scrDirPath3, "foo", "bar.txt"), "bar");
+
+    await copyfiles(scrDirPath3, distDirPath3);
+
+    expect(
+      await fs.readFile(path.resolve(distDirPath3, "foo", "bar.txt"), "utf8"),
+    ).toBe("bar");
   });
 });

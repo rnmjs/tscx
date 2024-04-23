@@ -4,11 +4,12 @@ import { Compiler } from "./compiler.js";
 
 describe("compiler", () => {
   it("should get include", () => {
-    const exec = vi
-      .spyOn(childProcess, "execSync")
-      .mockReturnValue(
-        JSON.stringify({ include: ["foo"], compilerOptions: { strict: true } }),
-      );
+    const exec = vi.spyOn(childProcess, "execSync").mockReturnValue(
+      JSON.stringify({
+        include: ["foo"],
+        compilerOptions: { strict: true, rootDir: ".", outDir: "dist" },
+      }),
+    );
     const compiler = new Compiler({
       project: "tsconfig.json",
       remove: false,
