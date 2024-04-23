@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.1.0
+
+### Minor Changes
+
+- 0a2f8df: fix: fix copyfiles error
+
 ## 0.0.6
 
 ### Patch Changes
