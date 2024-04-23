@@ -53,6 +53,7 @@ export class Compiler {
     if (!this.currentSubprocess.killed) {
       this.currentSubprocess.kill();
     }
+    this.currentSubprocess.removeAllListeners("close");
     this.currentSubprocess.on("close", () => {
       this.execTasks(id);
     });
