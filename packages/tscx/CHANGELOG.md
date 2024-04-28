@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.1.2
+
+### Patch Changes
+
+- bd20506: feat: support `--script` option
+
 ## 0.1.1
 
 ### Patch Changes
