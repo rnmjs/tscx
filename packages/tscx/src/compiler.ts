@@ -3,12 +3,13 @@ import childProcess from "node:child_process";
 import path from "node:path";
 import process from "node:process";
 import type ts from "typescript";
-import { copyfiles, exec, remove, tsc } from "./cmd/index.js";
+import { copyfiles, exec, remove, script, tsc } from "./cmd/index.js";
 
 export interface CompilerOptions {
   project: string;
   remove: boolean;
   copyfiles: boolean;
+  script?: string;
   exec?: string;
 }
 
@@ -60,11 +61,18 @@ export class Compiler {
   }
 
   private getTasks(): Array<() => childProcess.ChildProcess> {
-    const { project, remove: rm, copyfiles: cp, exec: ex } = this.options;
+    const {
+      project,
+      remove: rm,
+      copyfiles: cp,
+      script: scr,
+      exec: ex,
+    } = this.options;
     return [
       ...(rm ? [() => remove(this.outDir)] : []),
       () => tsc({ project }),
       ...(cp ? [() => copyfiles(this.rootDir, this.outDir)] : []),
+      ...(scr ? [() => script(scr)] : []),
       ...(ex ? [() => exec(ex)] : []),
     ];
   }

@@ -38,6 +38,10 @@ new Command()
     false,
   )
   .option(
+    "-s, --script <scr>",
+    "Run 'npm run <scr>' after every successful compilation. This will run before --exec option.",
+  )
+  .option(
     "-e, --exec <path>",
     "Execute or restart the specified js file after every successful compilation.",
   )

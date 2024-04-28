@@ -27,12 +27,19 @@ Happy hacking!
 
 ## Highlight
 
-- Same usages as `tsc` with few additional options.
-- Remove output folder before every compilation.
-- Copy non-ts files to output folder after every compilation.
-- Execute js file after compilation success.
+- Same usages as `tsc`.
 - Respect `tsconfig.json`.
 - ESM.
+
+## Differences with `tsc`
+
+- ✅ Support option `--remove` for removing output folder before every compilation.
+- ✅ Support option `--copyfiles` for copying non-ts files to output folder after every compilation.
+- ✅ Support option `--script <scr>` for running `npm run <scr>` after compilation success.
+- ✅ Support option `--exec <path>` for executing js file after compilation success.
+- ❌ As for `tsc` built-in options, we only support options below.
+  - `--project`
+  - `--watch`
 
 ## Install
 

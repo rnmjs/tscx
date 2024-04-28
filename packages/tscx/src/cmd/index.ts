@@ -14,26 +14,31 @@ const TSC_PATH = path.resolve(
   "tsc",
 );
 
-function spawnNode(...args: string[]) {
-  return childProcess.spawn("node", args, { stdio: "inherit" });
+function spawn(cmd: "node" | "npm", ...args: string[]) {
+  return childProcess.spawn(cmd, args, { stdio: "inherit" });
 }
 
 export function remove(filepath: string) {
   console.log("Remove", filepath);
-  return spawnNode(REMOVE_PATH, filepath);
+  return spawn("node", REMOVE_PATH, filepath);
 }
 
 export function tsc(options: { project: string }) {
   console.log("Tsc", options);
-  return spawnNode(TSC_PATH, "--project", options.project);
+  return spawn("node", TSC_PATH, "--project", options.project);
 }
 
 export function copyfiles(rootDir: string, outDir: string) {
   console.log("Copyfiles", rootDir, "=>", outDir);
-  return spawnNode(COPYFILES_PATH, rootDir, outDir);
+  return spawn("node", COPYFILES_PATH, rootDir, outDir);
+}
+
+export function script(scr: string) {
+  console.log("Script", `npm run ${scr}`);
+  return spawn("npm", "run", scr);
 }
 
 export function exec(filepath: string) {
   console.log("Execute", filepath);
-  return spawnNode(filepath);
+  return spawn("node", filepath);
 }
