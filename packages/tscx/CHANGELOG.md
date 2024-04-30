@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.1.3
+
+### Patch Changes
+
+- a8e23c0: fix: the value of --project option can be a dir
+
 ## 0.1.2
 
 ### Patch Changes
