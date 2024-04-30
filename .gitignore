@@ -5,3 +5,4 @@ dist
 out
 tmp
 v8-compile-cache-*
+tsx-*
