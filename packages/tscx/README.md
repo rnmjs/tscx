@@ -5,7 +5,7 @@
 [![](https://img.shields.io/npm/dm/@rnm/tscx.svg)](https://www.npmjs.com/package/@rnm/tscx)
 [![](https://img.shields.io/librariesio/release/npm/@rnm/tscx)](https://www.npmjs.com/package/@rnm/tscx)
 [![](https://packagephobia.com/badge?p=@rnm/tscx)](https://packagephobia.com/result?p=@rnm/tscx)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/rnmjs/tscx?tab=readme-ov-file#contributing)
 
 A `tsc` wrapper with many convenient features. Bring the [nodemon](https://www.npmjs.com/package/nodemon) + JavaScript development experience to TypeScript.
 
@@ -59,6 +59,13 @@ $ npx tscx --project tsconfig.build.json --watch --exec bootstrap.js
 # Remove => Compile => Copy => npm run => Bootstrap => Edit any file to repeat it
 $ npx tscx --project tsconfig.build.json --remove --copyfiles --watch --script my-script --exec bootstrap.js
 ```
+
+## Contributing
+
+- Clone this repository.
+- Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`.
+- Install dependencies using `pnpm install`.
+- Run `pnpm build` to build and `pnpm test` to test.
 
 ## License
 
