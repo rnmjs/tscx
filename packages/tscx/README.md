@@ -3,7 +3,6 @@
 [![](https://img.shields.io/npm/l/@rnm/tscx.svg)](https://github.com/rnmjs/tscx/blob/main/LICENSE)
 [![](https://img.shields.io/npm/v/@rnm/tscx.svg)](https://www.npmjs.com/package/@rnm/tscx)
 [![](https://img.shields.io/npm/dm/@rnm/tscx.svg)](https://www.npmjs.com/package/@rnm/tscx)
-[![](https://img.shields.io/librariesio/release/npm/@rnm/tscx)](https://www.npmjs.com/package/@rnm/tscx)
 [![](https://packagephobia.com/badge?p=@rnm/tscx)](https://packagephobia.com/result?p=@rnm/tscx)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/rnmjs/tscx?tab=readme-ov-file#contributing)
 
