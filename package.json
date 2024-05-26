@@ -11,11 +11,11 @@
     "release": "changeset publish",
     "style": "git-validator",
     "style:update": "git-validator -u",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test && pnpm style"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.1",
-    "git-validator": "0.17.0",
+    "@changesets/cli": "2.27.3",
+    "git-validator": "0.17.5",
     "typescript": "5.4.5",
     "vitest": "1.6.0"
   },
