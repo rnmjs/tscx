@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.1.4
+
+### Patch Changes
+
+- f38dcb7: chore: upgrade deps
+
 ## 0.1.3
 
 ### Patch Changes
