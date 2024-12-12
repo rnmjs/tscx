@@ -4,5 +4,6 @@ pnpm-lock.yaml
 dist
 out
 tmp
+node-compile-cache
 v8-compile-cache-*
 tsx-*

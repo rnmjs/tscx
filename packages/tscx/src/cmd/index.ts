@@ -35,7 +35,7 @@ export function copyfiles(rootDir: string, outDir: string) {
 
 export function script(scr: string) {
   console.log("Script", `npm run ${scr}`);
-  return spawn("npm", "run", scr);
+  return spawn("npm", "run", scr); // TODO: Use node --run instead of npm run. See https://nodejs.org/api/cli.html#--run
 }
 
 export function exec(filepath: string) {

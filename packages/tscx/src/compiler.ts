@@ -40,7 +40,7 @@ export class Compiler {
   }
 
   compile() {
-    const id = Date.now() + "_" + Math.random().toString(36).slice(2);
+    const id = `${Date.now().toString()}_${Math.random().toString(36).slice(2)}`;
     this.id = id;
 
     if (!this.currentSubprocess) {
@@ -116,7 +116,6 @@ export class Compiler {
     );
     const cmd = `node ${tscPath} --showConfig --project ${this.options.project}`;
     const config: TsConfig = JSON.parse(
-      // eslint-disable-next-line n/no-sync
       childProcess.execSync(cmd).toString("utf8"),
     );
     if (
@@ -135,7 +134,7 @@ export class Compiler {
   getOutDir() {
     const outDir = this.tsconfig.compilerOptions?.outDir;
     if (!outDir) {
-      throw new Error(`"outDir" is not found`);
+      throw new Error('"outDir" is not found');
     }
     const absoluteOutDir = path.resolve(process.cwd(), outDir);
     if (process.cwd().startsWith(absoluteOutDir)) {
@@ -148,14 +147,12 @@ export class Compiler {
 
   private getRootDir() {
     const rootDir = this.tsconfig.compilerOptions?.rootDir;
-    if (rootDir) {
-      return path.resolve(process.cwd(), rootDir);
-    } else {
-      return path.resolve(
-        process.cwd(),
-        this.getRootDirByFiles(this.tsconfig.files ?? []),
-      );
-    }
+    return rootDir
+      ? path.resolve(process.cwd(), rootDir)
+      : path.resolve(
+          process.cwd(),
+          this.getRootDirByFiles(this.tsconfig.files ?? []),
+        );
   }
 
   /**

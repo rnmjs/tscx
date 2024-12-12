@@ -3,28 +3,30 @@ import path from "node:path";
 
 /**
  * Copy non-ts/non-js files to outDir
- * @param rootDir absolute path
- * @param outDir absolute path
+ * @param rootDirectory absolute path
+ * @param outDirectory absolute path
  */
-export async function copyfiles(rootDir: string, outDir: string) {
-  rootDir = path.resolve(rootDir);
-  outDir = path.resolve(outDir);
+export async function copyfiles(rootDirectory: string, outDirectory: string) {
+  const rootDir = path.resolve(rootDirectory);
+  const outDir = path.resolve(outDirectory);
   async function walkDir(dir: string, cb: (filepath: string) => Promise<void>) {
     await Promise.all(
       (await fs.readdir(dir))
         .map((filepath) => path.resolve(dir, filepath))
         .map(async (filepath) => {
-          if ((await fs.stat(filepath)).isDirectory()) {
-            if (
-              !filepath.startsWith(outDir) &&
-              !filepath.endsWith(`${path.sep}node_modules`)
-            ) {
-              await walkDir(filepath, cb);
-            }
-          } else {
-            if (!/\.(js|cjs|mjs|jsx|ts|cts|mts|tsx)$/.test(filepath)) {
-              await cb(filepath);
-            }
+          const stat = await fs.stat(filepath);
+          if (
+            stat.isFile() &&
+            !/\.(js|cjs|mjs|jsx|ts|cts|mts|tsx)$/.test(filepath)
+          ) {
+            await cb(filepath);
+          }
+          if (
+            stat.isDirectory() &&
+            !filepath.startsWith(outDir) &&
+            !filepath.endsWith(`${path.sep}node_modules`)
+          ) {
+            await walkDir(filepath, cb);
           }
         }),
     );
