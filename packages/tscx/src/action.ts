@@ -17,17 +17,9 @@ export class Action {
     this.compiler = new Compiler(options);
   }
 
-  private setupWatcher() {
-    const include = this.compiler.getInclude() ?? [];
-    const watchFiles =
-      include.length <= 0
-        ? [process.cwd()]
-        : include
-            .map((i) => path.resolve(process.cwd(), i))
-            .concat(path.resolve(process.cwd(), this.options.project));
-
+  private watch(paths: string[]) {
     this.watcher = chokidar
-      .watch(watchFiles, {
+      .watch(paths, {
         ignored: [
           "**/node_modules/**",
           "**/.git/**",
@@ -39,6 +31,29 @@ export class Action {
       .on("unlink", (filepath) => this.cb(filepath))
       .on("change", (filepath) => this.cb(filepath))
       .on("ready", () => this.cb());
+  }
+
+  private setupWatcher() {
+    const include = this.compiler.getInclude() ?? [];
+    const watchFiles =
+      include.length <= 0
+        ? [process.cwd()]
+        : include
+            .map((i) => path.resolve(process.cwd(), i))
+            .concat(path.resolve(process.cwd(), this.options.project));
+
+    if (this.watcher) {
+      // If this method throw an error (I mean the promise rejected), the process will exit with non-zero code.
+      // See https://github.com/zanminkian/zanminkian.github.io/issues/54
+      this.watcher.close().then(
+        () => this.watch(watchFiles),
+        (e) => {
+          throw new Error("Close watcher fail!", { cause: e });
+        },
+      );
+    } else {
+      this.watch(watchFiles);
+    }
   }
 
   private cb(filepath?: string) {
@@ -66,10 +81,6 @@ export class Action {
       );
       return;
     }
-    this.watcher?.close().catch((e) => {
-      console.error("Close watcher fail!", e);
-      process.exit(1);
-    });
     this.setupWatcher();
     this.lastUpdateTsconfigTime = now;
   }

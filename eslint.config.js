@@ -6,12 +6,6 @@ export default new Builder()
   .enablePackagejson()
   .enableJavascript()
   .enableTypescript({
-    omit: [
-      "@fenge/no-restricted-loops",
-      "@typescript-eslint/no-floating-promises",
-      "es-x/no-top-level-await",
-      "unicorn/no-process-exit",
-      "no-console",
-    ],
+    omit: ["@fenge/no-restricted-loops", "no-console"],
   })
   .toConfig();
