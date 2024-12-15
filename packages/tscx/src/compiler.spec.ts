@@ -12,6 +12,7 @@ describe("compiler", () => {
     );
     const compiler = new Compiler({
       project: "tsconfig.json",
+      noCheck: false,
       remove: false,
       copyfiles: false,
     });
@@ -34,6 +35,7 @@ describe("compiler", () => {
       () =>
         new Compiler({
           project: "tsconfig.json",
+          noCheck: false,
           remove: false,
           copyfiles: false,
         }),

@@ -27,6 +27,11 @@ new Command()
     "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.",
     "tsconfig.json",
   )
+  .option(
+    "--noCheck",
+    "Disable full type checking (only critical parse and emit errors will be reported).",
+    false,
+  )
   .option("-w, --watch", "Watch input files.", false)
   .option(
     "-r, --remove",

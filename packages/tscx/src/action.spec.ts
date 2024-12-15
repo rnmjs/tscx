@@ -11,8 +11,9 @@ vi.mock("./compiler.js", () => {
 describe("action", () => {
   it("should call compiler's compile method", () => {
     const action = new Action({
-      watch: false,
       project: "tsconfig.json",
+      noCheck: false,
+      watch: false,
       remove: false,
       copyfiles: false,
     });

@@ -24,6 +24,7 @@ A `tsc` wrapper with many convenient features. Bring the [nodemon](https://www.n
 - 🚨 As for `tsc` built-in options, we only support these options below.
   - `--project`
   - `--watch`
+  - `--noCheck`
 
 ## Install
 

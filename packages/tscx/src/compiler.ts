@@ -7,6 +7,7 @@ import { copyfiles, exec, remove, script, tsc } from "./cmd/index.js";
 
 export interface CompilerOptions {
   project: string;
+  noCheck: boolean;
   remove: boolean;
   copyfiles: boolean;
   script?: string;
@@ -63,6 +64,7 @@ export class Compiler {
   private getTasks(): Array<() => childProcess.ChildProcess> {
     const {
       project,
+      noCheck,
       remove: rm,
       copyfiles: cp,
       script: scr,
@@ -70,7 +72,7 @@ export class Compiler {
     } = this.options;
     return [
       ...(rm ? [() => remove(this.outDir)] : []),
-      () => tsc({ project }),
+      () => tsc({ project, noCheck }),
       ...(cp ? [() => copyfiles(this.rootDir, this.outDir)] : []),
       ...(scr ? [() => script(scr)] : []),
       ...(ex ? [() => exec(ex)] : []),

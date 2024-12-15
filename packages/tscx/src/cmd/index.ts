@@ -23,9 +23,15 @@ export function remove(filepath: string) {
   return spawn("node", REMOVE_PATH, filepath);
 }
 
-export function tsc(options: { project: string }) {
+export function tsc(options: { project: string; noCheck: boolean }) {
   console.log("Tsc", options);
-  return spawn("node", TSC_PATH, "--project", options.project);
+  const args = [
+    TSC_PATH,
+    "--project",
+    options.project,
+    ...(options.noCheck ? ["--noCheck"] : []),
+  ];
+  return spawn("node", ...args);
 }
 
 export function copyfiles(rootDir: string, outDir: string) {
