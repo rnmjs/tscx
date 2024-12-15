@@ -4,8 +4,8 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REMOVE_PATH = path.resolve(__dirname, "remove.mjs");
-const COPYFILES_PATH = path.resolve(__dirname, "copyfiles.mjs");
+const REMOVE_PATH = path.resolve(__dirname, "remove.cli.mjs");
+const COPYFILES_PATH = path.resolve(__dirname, "copyfiles.cli.mjs");
 const TSC_PATH = path.resolve(
   process.cwd(),
   "node_modules",
