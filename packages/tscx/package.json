@@ -22,10 +22,10 @@
   "author": "hellozmj@qq.com",
   "type": "module",
   "bin": {
-    "tscx": "./dist/bin/tscx.cjs"
+    "tscx": "./dist/bin/tscx.cli.mjs"
   },
   "scripts": {
-    "build": "tsx ./src/bin/tscx.cts",
+    "build": "tsx ./src/bin/tscx.cli.mts",
     "test": "vitest run"
   },
   "dependencies": {
