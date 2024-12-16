@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.1.5
+
+### Patch Changes
+
+- 5b962c7: feat: support built-in `--noCheck` options
+
 ## 0.1.4
 
 ### Patch Changes
