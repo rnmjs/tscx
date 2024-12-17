@@ -8,6 +8,42 @@
 
 A `tsc` wrapper with many convenient features. Bring the [nodemon](https://www.npmjs.com/package/nodemon) + JavaScript development experience to TypeScript.
 
+## Why
+
+Developing a backend application using TypeScript needs some other third-party library. It's tedious and hard to config 🤦‍♂️.
+
+```json
+{
+  "scripts": {
+    "clean": "rimraf dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "copy-files": "copyfiles -u 1 src/**/*.njk dist",
+    "build": "npm run clean && npm run compile && npm run copy-files",
+    "dev": "NODE_ENV=local nodemon -w src -e ts --exec 'npm run build && node bootstrap.js'"
+  },
+  "devDependencies": {
+    "copyfiles": "2.4.1",
+    "nodemon": "3.1.0",
+    "rimraf": "5.0.5",
+    "typescript": "5.6.3"
+  }
+}
+```
+
+Now you can simplify your `package.json` by using this library 😄.
+
+```json
+{
+  "scripts": {
+    "dev": "NODE_ENV=local tscx -rwc -p tsconfig.build.json -e bootstrap.js"
+  },
+  "devDependencies": {
+    "@rnm/tscx": "*",
+    "typescript": "5.6.3"
+  }
+}
+```
+
 ## Highlight
 
 - Same usages as `tsc`.
@@ -21,7 +57,7 @@ A `tsc` wrapper with many convenient features. Bring the [nodemon](https://www.n
 - ✅ Additionally support `--script <scr>` for running `npm run <scr>` after compilation success.
 - ✅ Additionally support `--exec <path>` for executing js file after compilation success.
 - 🚨 [outDir](https://www.typescriptlang.org/tsconfig/#outDir) is required in `tsconfig`.
-- 🚨 As for `tsc` built-in options, we only support these options below.
+- ⚠️ As for `tsc` built-in options, we only support these options below.
   - `--project`
   - `--watch`
   - `--noCheck`

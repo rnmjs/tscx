@@ -3,9 +3,9 @@
 import { Builder } from "fenge/eslint-config";
 
 export default new Builder()
-  .enablePackagejson()
-  .enableJavascript()
-  .enableTypescript({
+  .enablePackageJson()
+  .enableJavaScript()
+  .enableTypeScript({
     omit: ["@fenge/no-restricted-loops", "no-console"],
   })
   .toConfig();
