@@ -24,7 +24,8 @@ export async function copyfiles(rootDirectory: string, outDirectory: string) {
           if (
             stat.isDirectory() &&
             !filepath.startsWith(outDir) &&
-            !filepath.endsWith(`${path.sep}node_modules`)
+            !filepath.endsWith(`${path.sep}node_modules`) &&
+            !filepath.endsWith(`${path.sep}.git`)
           ) {
             await walkDir(filepath, cb);
           }
