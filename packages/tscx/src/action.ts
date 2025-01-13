@@ -14,7 +14,8 @@ export class Action {
   private readonly compiler;
   private watcher?: FSWatcher;
   constructor(private readonly options: TscxOptions) {
-    this.compiler = new Compiler(options);
+    const { watch, ...compilerOptions } = options;
+    this.compiler = new Compiler(compilerOptions);
   }
 
   private watch(paths: string[]) {

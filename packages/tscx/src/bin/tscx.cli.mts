@@ -1,9 +1,11 @@
 #!/usr/bin/env node
+import childProcess from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
+import minimist from "minimist";
 import { Action } from "../action.js";
 
 const version: string = JSON.parse(
@@ -27,11 +29,6 @@ new Command()
     "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.",
     "tsconfig.json",
   )
-  .option(
-    "--noCheck",
-    "Disable full type checking (only critical parse and emit errors will be reported).",
-    false,
-  )
   .option("-w, --watch", "Watch input files.", false)
   .option(
     "-r, --remove",
@@ -51,12 +48,22 @@ new Command()
     "-e, --exec <path>",
     "Execute or restart the specified js file after every successful compilation.",
   )
-  .action(async (options) => {
+  .option("-h, --help", "Display help for command.")
+  .allowUnknownOption()
+  .action(async (options, cmd) => {
+    if (options.help) {
+      cmd.outputHelp();
+      console.log(`\n${"=".repeat(process.stdout.columns)}\n`);
+      // TODO: using npx seems not good
+      childProcess.spawnSync("npx", ["tsc", "--help"], { stdio: "inherit" });
+      return;
+    }
     const isDir = async (p: string) =>
       (await fs.stat(path.resolve(process.cwd(), p))).isDirectory();
     if (options.project && (await isDir(options.project))) {
       options.project = path.join(options.project, "tsconfig.json");
     }
-    new Action(options).start();
+    const { _, ...extraOptions } = minimist(cmd.args);
+    new Action({ ...options, ...extraOptions }).start();
   })
   .parse();

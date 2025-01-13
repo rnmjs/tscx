@@ -23,13 +23,17 @@ export function remove(filepath: string) {
   return spawn("node", REMOVE_PATH, filepath);
 }
 
-export function tsc(options: { project: string; noCheck: boolean }) {
+export function tsc(options: Record<string, string | boolean>) {
   console.log("Tsc", options);
   const args = [
     TSC_PATH,
-    "--project",
-    options.project,
-    ...(options.noCheck ? ["--noCheck"] : []),
+    ...Object.entries(options).flatMap(([key, value]) =>
+      value === false
+        ? []
+        : value === true
+          ? [`--${key}`]
+          : [`--${key}`, value],
+    ),
   ];
   return spawn("node", ...args);
 }

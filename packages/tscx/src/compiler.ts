@@ -5,9 +5,8 @@ import process from "node:process";
 import type ts from "typescript";
 import { copyfiles, exec, remove, script, tsc } from "./cmd/index.js";
 
-export interface CompilerOptions {
+export interface CompilerOptions extends Record<string, string | boolean> {
   project: string;
-  noCheck: boolean;
   remove: boolean;
   copyfiles: boolean;
   script?: string;
@@ -64,15 +63,15 @@ export class Compiler {
   private getTasks(): Array<() => childProcess.ChildProcess> {
     const {
       project,
-      noCheck,
       remove: rm,
       copyfiles: cp,
       script: scr,
       exec: ex,
+      ...others
     } = this.options;
     return [
       ...(rm ? [() => remove(this.outDir)] : []),
-      () => tsc({ project, noCheck }),
+      () => tsc({ project, ...others }),
       ...(cp ? [() => copyfiles(this.rootDir, this.outDir)] : []),
       ...(scr ? [() => script(scr)] : []),
       ...(ex ? [() => exec(ex)] : []),
