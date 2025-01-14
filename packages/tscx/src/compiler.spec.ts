@@ -1,6 +1,6 @@
 import childProcess from "node:child_process";
 import { describe, expect, it, vi } from "vitest";
-import { Compiler } from "./compiler.js";
+import { Compiler } from "./compiler.ts";
 
 describe("compiler", () => {
   it("should get include", () => {

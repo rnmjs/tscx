@@ -3,7 +3,7 @@ import childProcess from "node:child_process";
 import path from "node:path";
 import process from "node:process";
 import type ts from "typescript";
-import { copyfiles, exec, remove, script, tsc } from "./cmd/index.js";
+import { copyfiles, exec, remove, script, tsc } from "./cmd/index.ts";
 
 export interface CompilerOptions extends Record<string, string | boolean> {
   project: string;
@@ -28,11 +28,6 @@ export class Compiler {
   private outDir: string;
 
   constructor(private readonly options: CompilerOptions) {
-    // setup options
-    this.options.project = path.resolve(process.cwd(), this.options.project);
-    if (this.options.exec) {
-      this.options.exec = path.resolve(process.cwd(), this.options.exec);
-    }
     // setup tsconfig
     this.tsconfig = this.getTsConfig();
     this.rootDir = this.getRootDir();

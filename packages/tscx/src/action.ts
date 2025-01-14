@@ -2,7 +2,7 @@
 import path from "node:path";
 import process from "node:process";
 import chokidar, { type FSWatcher } from "chokidar";
-import { Compiler, type CompilerOptions } from "./compiler.js";
+import { Compiler, type CompilerOptions } from "./compiler.ts";
 
 interface TscxOptions extends CompilerOptions {
   watch: boolean;

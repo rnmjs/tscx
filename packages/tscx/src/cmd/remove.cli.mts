@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import process from "node:process";
-import { remove } from "./remove.js";
+import { remove } from "./remove.ts";
 
 const filepath = process.argv[2];
 if (!filepath) {

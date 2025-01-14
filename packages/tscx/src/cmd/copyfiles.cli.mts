@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import process from "node:process";
-import { copyfiles } from "./copyfiles.js";
+import { copyfiles } from "./copyfiles.ts";
 
 const rootDir = process.argv[2];
 const outDir = process.argv[3];

@@ -6,7 +6,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import minimist from "minimist";
-import { Action } from "../action.js";
+import { Action } from "../action.ts";
 
 const version: string = JSON.parse(
   await fs.readFile(

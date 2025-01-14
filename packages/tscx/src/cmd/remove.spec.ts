@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { remove } from "./remove.js";
+import { remove } from "./remove.ts";
 
 const TMP = os.tmpdir();
 const tmpFilePath = path.resolve(TMP, "tscx_tmp_file_name");

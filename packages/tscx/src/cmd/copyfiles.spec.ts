@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { copyfiles } from "./copyfiles.js";
+import { copyfiles } from "./copyfiles.ts";
 
 const TMP1 = path.resolve(os.tmpdir(), "tscx_tmp_for_copy1");
 const scrDirPath1 = path.resolve(TMP1, "src");

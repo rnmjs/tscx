@@ -9,7 +9,10 @@ import path from "node:path";
 export async function copyfiles(rootDirectory: string, outDirectory: string) {
   const rootDir = path.resolve(rootDirectory);
   const outDir = path.resolve(outDirectory);
-  async function walkDir(dir: string, cb: (filepath: string) => Promise<void>) {
+  const walkDir = async (
+    dir: string,
+    cb: (filepath: string) => Promise<void>,
+  ) => {
     await Promise.all(
       (await fs.readdir(dir))
         .map((filepath) => path.resolve(dir, filepath))
@@ -31,7 +34,7 @@ export async function copyfiles(rootDirectory: string, outDirectory: string) {
           }
         }),
     );
-  }
+  };
   await walkDir(rootDir, async (filepath) => {
     const dest = filepath.replace(rootDir, outDir);
     console.log("Copy", filepath, "=>", dest);

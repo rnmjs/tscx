@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, type Mock } from "vitest";
-import { Action } from "./action.js";
-import { Compiler } from "./compiler.js";
+import { Action } from "./action.ts";
+import { Compiler } from "./compiler.ts";
 
 vi.mock("./compiler.js", () => {
   const C = vi.fn();
