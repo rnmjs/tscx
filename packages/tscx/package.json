@@ -1,6 +1,6 @@
 {
   "name": "@rnm/tscx",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "A tsc wrapper with many convenient features.",
   "keywords": [
     "typescript",

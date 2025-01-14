@@ -1,5 +1,15 @@
 # @rnm/tscx
 
+## 0.2.0
+
+### Minor Changes
+
+- 2c7a5da: feat: allow all options that are allowed in `tsc`
+
+### Patch Changes
+
+- 2eb0e2c: fix: dont't copy files in `.git` folder
+
 ## 0.1.5
 
 ### Patch Changes
