@@ -50,7 +50,7 @@ new Command()
   )
   .option("-h, --help", "Display help for command.")
   .allowUnknownOption()
-  .action(async (options, cmd) => {
+  .action(async (options, cmd: Command) => {
     if (options.help) {
       cmd.outputHelp();
       console.log(`\n${"=".repeat(process.stdout.columns)}\n`);

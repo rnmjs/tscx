@@ -8,4 +8,9 @@ export default new Builder()
   .enableTypeScript({
     omit: ["@fenge/no-restricted-loops", "no-console"],
   })
+  .append({
+    rules: {
+      "check-file/filename-blocklist": "off",
+    },
+  })
   .toConfig();

@@ -8,19 +8,28 @@
     "build": "pnpm -r build",
     "install": "pnpm build",
     "prepare": "fenge install",
-    "release": "changeset publish",
+    "release": "pnpm -r --no-git-checks publish --tag $(test -f .changeset/pre.json && jq -r '.tag' .changeset/pre.json || echo 'latest')",
     "style": "fenge",
     "style:update": "fenge -u",
-    "test": "pnpm -r test && pnpm style"
+    "test": "pnpm style && pnpm -r test"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.11",
-    "fenge": "0.4.0",
-    "typescript": "5.7.3"
+    "@changesets/cli": "2.29.4",
+    "fenge": "0.8.6",
+    "typescript": "5.8.3"
   },
-  "packageManager": "pnpm@9.15.0",
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": "^9.0.0"
+    "node": ">=22.14.0",
+    "pnpm": "^10.0.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.14.0"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "10.8.0"
+    }
   }
 }

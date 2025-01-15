@@ -46,12 +46,12 @@ export class Action {
     if (this.watcher) {
       // If this method throw an error (I mean the promise rejected), the process will exit with non-zero code.
       // See https://github.com/zanminkian/zanminkian.github.io/issues/54
-      this.watcher.close().then(
-        () => this.watch(watchFiles),
-        (e) => {
+      this.watcher
+        .close()
+        .then(() => this.watch(watchFiles))
+        .catch((e: unknown) => {
           throw new Error("Close watcher fail!", { cause: e });
-        },
-      );
+        });
     } else {
       this.watch(watchFiles);
     }
@@ -65,7 +65,8 @@ export class Action {
       path.resolve(process.cwd(), filepath) !==
         path.resolve(process.cwd(), this.options.project)
     ) {
-      return this.compiler.compile();
+      this.compiler.compile();
+      return;
     }
 
     // user edit tsconfig file

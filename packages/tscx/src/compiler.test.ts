@@ -1,10 +1,14 @@
 import childProcess from "node:child_process";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Compiler } from "./compiler.ts";
 
 describe("compiler", () => {
+  const mock = vi.spyOn(childProcess, "execSync");
+  beforeEach(() => {
+    mock.mockClear();
+  });
   it("should get include", () => {
-    const exec = vi.spyOn(childProcess, "execSync").mockReturnValue(
+    const exec = mock.mockReturnValue(
       JSON.stringify({
         include: ["foo"],
         compilerOptions: { strict: true, rootDir: ".", outDir: "dist" },
@@ -25,11 +29,9 @@ describe("compiler", () => {
   });
 
   it("should fail when compilerOptions is empty", () => {
-    const exec = vi
-      .spyOn(childProcess, "execSync")
-      .mockReturnValue(
-        JSON.stringify({ include: ["foo"], compilerOptions: {} }),
-      );
+    const exec = mock.mockReturnValue(
+      JSON.stringify({ include: ["foo"], compilerOptions: {} }),
+    );
 
     expect(
       () =>
