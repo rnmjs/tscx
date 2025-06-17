@@ -26,7 +26,7 @@
   },
   "scripts": {
     "build": "node --experimental-strip-types --experimental-transform-types ./src/bin/tscx.cli.mts",
-    "test": "vitest run"
+    "test": "vitest run --coverage --coverage.reporter=json-summary --coverage.reporter=html && make-coverage-badge --output-path badge/coverage.svg"
   },
   "dependencies": {
     "chokidar": "3.6.0",
@@ -36,6 +36,8 @@
   "devDependencies": {
     "@types/minimist": "1.2.5",
     "@types/node": "22.15.30",
+    "@vitest/coverage-v8": "3.2.3",
+    "make-coverage-badge": "1.2.0",
     "vitest": "3.2.3"
   },
   "peerDependencies": {
