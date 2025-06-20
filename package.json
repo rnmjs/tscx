@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "2.29.4",
-    "fenge": "0.8.6",
+    "fenge": "0.9.1",
     "typescript": "5.8.3"
   },
   "engines": {
