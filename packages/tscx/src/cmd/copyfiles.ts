@@ -37,7 +37,6 @@ export async function copyfiles(rootDirectory: string, outDirectory: string) {
   };
   await walkDir(rootDir, async (filepath) => {
     const dest = filepath.replace(rootDir, outDir);
-    console.log("Copy", filepath, "=>", dest);
     await fs.mkdir(path.dirname(dest), { recursive: true });
     await fs.copyFile(filepath, dest);
   });

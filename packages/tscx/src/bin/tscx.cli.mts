@@ -6,7 +6,8 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import minimist from "minimist";
-import { Action } from "../action.ts";
+import { tscPath } from "../common.ts";
+import { Main } from "../main.ts";
 
 const version: string = JSON.parse(
   await fs.readFile(
@@ -41,10 +42,6 @@ new Command()
     false,
   )
   .option(
-    "-s, --script <scr>",
-    "Run 'npm run <scr>' after every successful compilation. This will run before --exec option.",
-  )
-  .option(
     "-e, --exec <path>",
     "Execute or restart the specified js file after every successful compilation.",
   )
@@ -54,16 +51,20 @@ new Command()
     if (options.help) {
       cmd.outputHelp();
       console.log(`\n${"=".repeat(process.stdout.columns)}\n`);
-      // TODO: using npx seems not good
-      childProcess.spawnSync("npx", ["tsc", "--help"], { stdio: "inherit" });
+      childProcess.spawnSync("node", [tscPath, "--help"], { stdio: "inherit" });
       return;
     }
-    const isDir = async (p: string) =>
-      (await fs.stat(path.resolve(process.cwd(), p))).isDirectory();
-    if (options.project && (await isDir(options.project))) {
-      options.project = path.join(options.project, "tsconfig.json");
-    }
+    const { watch, ...otherOptions } = options;
     const { _, ...extraOptions } = minimist(cmd.args);
-    new Action({ ...options, ...extraOptions }).start();
+    const main = new Main({
+      ...otherOptions,
+      ...extraOptions,
+    });
+    if (watch) {
+      main.watch();
+    } else {
+      const code = await main.compile();
+      process.exit(code);
+    }
   })
   .parse();

@@ -14,5 +14,4 @@ export async function remove(filepath: string) {
       fs.rm(filepath, { recursive: true }, (e) => (e ? reject(e) : resolve()));
     });
   });
-  console.log(`Removed ${filepath}`);
 }
