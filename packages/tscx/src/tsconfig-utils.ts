@@ -1,4 +1,5 @@
 import childProcess from "node:child_process";
+import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import type ts from "typescript";
@@ -87,4 +88,16 @@ function getRootDirByFiles(files: string[]) {
     }, []);
 
   return path.join(...folders);
+}
+
+export function getTsConfigPath(project?: string) {
+  const dirOrFile1 = project
+    ? path.resolve(process.cwd(), project)
+    : process.cwd();
+  const dirOrFile2 = path.join(dirOrFile1, "tsconfig.json");
+  if (fs.statSync(dirOrFile1).isFile()) return dirOrFile1;
+  if (fs.statSync(dirOrFile2).isFile()) return dirOrFile2;
+  throw new Error(
+    `Could not find a tsconfig.json file at ${dirOrFile1} or ${dirOrFile2}`,
+  );
 }

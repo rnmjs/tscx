@@ -6,6 +6,7 @@ import {
   getOutDir,
   getRootDir,
   getTsConfig,
+  getTsConfigPath,
 } from "./tsconfig-utils.ts";
 
 export interface MainOptions extends Record<string, string | boolean> {
@@ -22,6 +23,7 @@ export class Main {
   private readonly copyfiles?: boolean;
   private readonly exec?: string;
 
+  private readonly tsconfigPath: string;
   private readonly rootDir: string;
   private readonly outDir: string;
   private readonly include: string[];
@@ -33,11 +35,12 @@ export class Main {
     if (copyfiles) this.copyfiles = copyfiles;
     if (exec) this.exec = exec;
 
-    const tsconfig = getTsConfig(
-      typeof this.tscOptions["project"] === "string"
-        ? this.tscOptions["project"]
-        : undefined,
-    );
+    const project = this.tscOptions["project"];
+    if (typeof project === "boolean") {
+      throw new Error("The `project` is required to be a string.");
+    }
+    this.tsconfigPath = getTsConfigPath(project);
+    const tsconfig = getTsConfig(this.tsconfigPath);
     this.rootDir = getRootDir(tsconfig);
     this.outDir = getOutDir(tsconfig);
     this.include = getInclude(tsconfig);
@@ -50,7 +53,12 @@ export class Main {
     // 3. Watch the `rootDir`.
     chokidar
       .watch(this.include, {
-        ignored: ["**/node_modules/**", "**/.git/**", this.outDir],
+        ignored: [
+          "**/node_modules/**",
+          "**/.git/**",
+          this.outDir,
+          this.tsconfigPath,
+        ],
         ignoreInitial: true,
       })
       .on("ready", () => this.restartQueue())
