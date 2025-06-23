@@ -28,7 +28,6 @@ new Command()
   .option(
     "-p, --project <path>",
     "Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.",
-    "tsconfig.json",
   )
   .option("-w, --watch", "Watch input files.", false)
   .option(
