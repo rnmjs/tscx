@@ -41,13 +41,8 @@ export class TaskQueue {
       }
       this.currentSubprocess = task();
       this.currentSubprocess.on("close", (code, signal) => {
-        // manually exiting or unexpected exception will not execute next task
-        if (code || signal) {
-          this.currentSubprocess = undefined;
-          this.listeners.get("close")?.(code, signal);
-          return;
-        }
-        if (index >= this.tasks.length - 1) {
+        // will not execute next task when the task is failed or there is not next task
+        if (code || signal || index >= this.tasks.length - 1) {
           this.currentSubprocess = undefined;
           this.listeners.get("close")?.(code, signal);
           return;

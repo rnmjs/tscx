@@ -44,6 +44,10 @@ export class Main {
   }
 
   watch() {
+    // TODO: Rethinking the watch files. Each of them below is reasonable. Scope: `process.cwd()` >= `rootDir` >= `include`.
+    // 1. Watch the `include`.
+    // 2. Watch the `process.cwd()`.
+    // 3. Watch the `rootDir`.
     chokidar
       .watch(this.include, {
         ignored: ["**/node_modules/**", "**/.git/**", this.outDir],
