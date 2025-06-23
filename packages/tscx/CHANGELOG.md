@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.0
+
+### Minor Changes
+
+- 23de386: refactor!: re-write it. drop `--script` option support
+
 ## 0.2.0
 
 ### Minor Changes
