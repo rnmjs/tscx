@@ -1,5 +1,13 @@
 # @rnm/tscx
 
+## 0.3.1
+
+### Patch Changes
+
+- 0da49b8: fix: print correct version when passing `--version`
+- 9be3a2a: fix: remove incorrect default
+- 95c6af9: fix: do not watch the tsconfig.json file
+
 ## 0.3.0
 
 ### Minor Changes
