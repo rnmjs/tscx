@@ -9,21 +9,8 @@ import minimist from "minimist";
 import { tscPath } from "../common.ts";
 import { Main } from "../main.ts";
 
-const version: string = JSON.parse(
-  await fs.readFile(
-    path.resolve(
-      path.dirname(fileURLToPath(import.meta.url)),
-      "..",
-      "..",
-      "package.json",
-    ),
-    "utf8",
-  ),
-).version;
-
 new Command()
   .name("tscx")
-  .version(version)
   .description("The TypeScript Compiler. Run `tsc` under the hood.")
   .option(
     "-p, --project <path>",
@@ -44,9 +31,28 @@ new Command()
     "-e, --exec <path>",
     "Execute or restart the specified js file after every successful compilation.",
   )
+  .option("-v, --version", "Print the compiler's version.")
   .option("-h, --help", "Display help for command.")
   .allowUnknownOption()
   .action(async (options, cmd: Command) => {
+    if (options.version) {
+      const version: string = JSON.parse(
+        await fs.readFile(
+          path.resolve(
+            path.dirname(fileURLToPath(import.meta.url)),
+            "..",
+            "..",
+            "package.json",
+          ),
+          "utf8",
+        ),
+      ).version;
+      const tscVersion = childProcess
+        .execSync(`node ${tscPath} --version`, { encoding: "utf8" })
+        .trim();
+      console.log(`${version} (TypeScript ${tscVersion})`);
+      return;
+    }
     if (options.help) {
       cmd.outputHelp();
       console.log(`\n${"=".repeat(process.stdout.columns)}\n`);
