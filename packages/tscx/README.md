@@ -6,7 +6,7 @@
 [![](https://packagephobia.com/badge?p=@rnm/tscx)](https://packagephobia.com/result?p=@rnm/tscx)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/rnmjs/tscx?tab=readme-ov-file#contributing)
 
-A `tsc` wrapper with many convenient features. Bring the [nodemon](https://www.npmjs.com/package/nodemon) + JavaScript development experience to TypeScript.
+A `tsc` wrapper with many convenient options. Bring the [nodemon](https://www.npmjs.com/package/nodemon) + JavaScript development experience to TypeScript.
 
 ## Why
 
@@ -53,7 +53,7 @@ Now you can simplify your `package.json` by using this library 😄.
 ## Differences with `tsc`
 
 - ✅ Additionally support `--remove` for removing output folder before every compilation.
-- ✅ Additionally support `--copyfiles` for copying non-ts files to output folder after every compilation.
+- ✅ Additionally support `--copyfiles` for copying non-ts and non-js files to output folder after every compilation.
 - ✅ Additionally support `--exec <path>` for executing js file after compilation success.
 - 🚨 [outDir](https://www.typescriptlang.org/tsconfig/#outDir) is required in `tsconfig`.
 
