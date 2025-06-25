@@ -1,10 +1,6 @@
-import path from "node:path";
+import module from "node:module";
 import process from "node:process";
 
-export const tscPath = path.resolve(
-  process.cwd(),
-  "node_modules",
-  "typescript",
-  "bin",
-  "tsc",
-);
+export const tscPath = module
+  .createRequire(process.cwd())
+  .resolve("typescript/bin/tsc");

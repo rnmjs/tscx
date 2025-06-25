@@ -50,7 +50,7 @@ export class Main {
     // TODO: Rethinking the watch files. Each of them below is reasonable. Scope: `process.cwd()` >= `rootDir` >= `include`.
     // 1. Watch the `include`.
     // 2. Watch the `process.cwd()`.
-    // 3. Watch the `rootDir`.
+    // 3. Watch the `rootDir`. Definitely, `rootDir` is not a good idea as it may change to another directory when ts file is added or deleted.
     chokidar
       .watch(this.include, {
         ignored: [
