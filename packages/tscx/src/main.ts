@@ -15,7 +15,9 @@ export interface MainOptions extends Record<string, string | boolean> {
   exec?: string;
 }
 
+// Note: In this class, `watch` and `compile` shouldn't be called more than once.
 export class Main {
+  private watcher: chokidar.FSWatcher | undefined = undefined;
   private currentQueue: TaskQueue | undefined = undefined;
 
   private readonly tscOptions: Record<string, string | boolean>;
@@ -51,7 +53,7 @@ export class Main {
     // 1. Watch the `include`.
     // 2. Watch the `process.cwd()`.
     // 3. Watch the `rootDir`. Definitely, `rootDir` is not a good idea as it may change to another directory when ts file is added or deleted.
-    chokidar
+    this.watcher = chokidar
       .watch(this.include, {
         ignored: [
           "**/node_modules/**",
@@ -80,11 +82,27 @@ export class Main {
 
   async compile() {
     return await new Promise<number>((resolve) => {
-      this.newQueue()
+      this.currentQueue = this.newQueue()
         .on("close", (code, signal) => {
           resolve(code ?? (signal ? 128 + os.constants.signals[signal] : 0));
         })
         .start();
+    });
+  }
+
+  async stop() {
+    // After the watcher is closed, restartQueue will never be called.
+    await this.watcher?.close();
+    return await new Promise<number>((resolve) => {
+      if (!this.currentQueue?.isRunning()) {
+        resolve(0);
+      } else {
+        this.currentQueue
+          .on("close", (code, signal) => {
+            resolve(code ?? (signal ? 128 + os.constants.signals[signal] : 0));
+          })
+          .stop();
+      }
     });
   }
 

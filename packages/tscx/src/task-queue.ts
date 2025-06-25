@@ -13,6 +13,9 @@ export class TaskQueue {
   private readonly tasks: Array<() => childProcess.ChildProcess> = [];
   // Note: Each event should not have more than one listeners! Main class requires this feature.
   private readonly listeners = new Map<string, (...args: any[]) => void>();
+  private isStartCalled = false;
+  private isStopCalled = false;
+
   constructor({
     removeConfig,
     tscConfig,
@@ -32,6 +35,7 @@ export class TaskQueue {
   }
 
   start() {
+    if (this.isStartCalled) return this;
     const execNextTask = (index = 0) => {
       const task = this.tasks[index];
       if (!task) {
@@ -51,6 +55,7 @@ export class TaskQueue {
       });
     };
     execNextTask();
+    this.isStartCalled = true;
     return this;
   }
 
@@ -63,7 +68,9 @@ export class TaskQueue {
   }
 
   stop() {
+    if (this.isStopCalled) return this;
     this.currentSubprocess?.kill();
+    this.isStopCalled = true;
     return this;
   }
 

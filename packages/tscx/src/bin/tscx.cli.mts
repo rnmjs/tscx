@@ -65,6 +65,22 @@ new Command()
       ...otherOptions,
       ...extraOptions,
     });
+    process.on("SIGINT", () => {
+      main
+        .stop()
+        .then((code) => process.exit(code))
+        .catch((e: unknown) => {
+          throw e;
+        });
+    });
+    process.on("SIGTERM", () => {
+      main
+        .stop()
+        .then((code) => process.exit(code))
+        .catch((e: unknown) => {
+          throw e;
+        });
+    });
     if (watch) {
       main.watch();
     } else {
