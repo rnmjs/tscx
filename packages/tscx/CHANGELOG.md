@@ -1,5 +1,12 @@
 # @rnm/tscx
 
+## 0.3.2
+
+### Patch Changes
+
+- 747915b: fix: correctly resolve tsc path
+- 3f0f512: fix: not be killed (using ctrl + c) when the task queue is still running
+
 ## 0.3.1
 
 ### Patch Changes
