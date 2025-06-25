@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.3
+
+### Patch Changes
+
+- 450546d: fix: crash
+
 ## 0.3.2
 
 ### Patch Changes
