@@ -24,6 +24,9 @@
   "bin": {
     "tscx": "./dist/bin/tscx.cli.mjs"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "node --experimental-strip-types ./src/bin/tscx.cli.mts",
     "test": "vitest run --coverage --coverage.reporter=json-summary --coverage.reporter=html && make-coverage-badge --output-path badge/coverage.svg"
@@ -35,7 +38,7 @@
   },
   "devDependencies": {
     "@types/minimist": "1.2.5",
-    "@types/node": "22.15.30",
+    "@types/node": "16.18.126",
     "@vitest/coverage-v8": "3.2.4",
     "make-coverage-badge": "1.2.0",
     "vitest": "3.2.4"

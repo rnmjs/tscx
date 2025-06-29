@@ -14,8 +14,8 @@
     "test": "pnpm style && pnpm -r test"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.4",
-    "fenge": "0.9.1",
+    "@changesets/cli": "2.29.5",
+    "fenge": "0.9.2",
     "typescript": "5.8.3"
   },
   "engines": {
