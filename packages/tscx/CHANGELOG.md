@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.4
+
+### Patch Changes
+
+- 72935d9: perf: add `files` field to package.json to decrease package size
+
 ## 0.3.3
 
 ### Patch Changes
