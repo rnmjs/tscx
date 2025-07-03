@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.5
+
+### Patch Changes
+
+- e23eefa: fix: disallow using `--copyfiles` and `--noEmit` at the same time
+
 ## 0.3.4
 
 ### Patch Changes
