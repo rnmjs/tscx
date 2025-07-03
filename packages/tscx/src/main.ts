@@ -43,6 +43,15 @@ export class Main {
     this.rootDir = getRootDir(tsconfig);
     this.outDir = getOutDir(tsconfig);
     this.include = getInclude(tsconfig);
+
+    if (
+      (tscOptions.includes("--noEmit") || tsconfig.compilerOptions?.noEmit) &&
+      this.copyfiles
+    ) {
+      throw new Error(
+        '"--copyfiles" option is not supported when "--noEmit" is set',
+      );
+    }
   }
 
   watch() {
