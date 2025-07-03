@@ -9,7 +9,8 @@ import {
   getTsConfigPath,
 } from "./tsconfig-utils.ts";
 
-export interface MainOptions extends Record<string, string | boolean> {
+export interface MainOptions {
+  project?: string;
   remove?: boolean;
   copyfiles?: boolean;
   exec?: string;
@@ -20,7 +21,7 @@ export class Main {
   private watcher: chokidar.FSWatcher | undefined = undefined;
   private currentQueue: TaskQueue | undefined = undefined;
 
-  private readonly tscOptions: Record<string, string | boolean>;
+  private readonly tscOptions: string[];
   private readonly remove?: boolean;
   private readonly copyfiles?: boolean;
   private readonly exec?: string;
@@ -30,17 +31,13 @@ export class Main {
   private readonly outDir: string;
   private readonly include: string[];
 
-  constructor(options: MainOptions) {
-    const { remove, copyfiles, exec, ...tscOptions } = options; // strip options which are not passed to tsc
+  constructor(options: MainOptions, tscOptions: string[]) {
+    const { remove, copyfiles, exec, project } = options; // strip options which are not passed to tsc
     this.tscOptions = tscOptions;
     if (remove) this.remove = remove;
     if (copyfiles) this.copyfiles = copyfiles;
     if (exec) this.exec = exec;
 
-    const project = this.tscOptions["project"];
-    if (typeof project === "boolean") {
-      throw new Error("The `project` is required to be a string.");
-    }
     this.tsconfigPath = getTsConfigPath(project);
     const tsconfig = getTsConfig(this.tsconfigPath);
     this.rootDir = getRootDir(tsconfig);

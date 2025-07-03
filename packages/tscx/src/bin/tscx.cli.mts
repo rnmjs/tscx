@@ -5,7 +5,6 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
-import minimist from "minimist";
 import { tscPath } from "../common.ts";
 import { Main } from "../main.ts";
 
@@ -60,11 +59,10 @@ new Command()
       return;
     }
     const { watch, ...otherOptions } = options;
-    const { _, ...extraOptions } = minimist(cmd.args);
-    const main = new Main({
-      ...otherOptions,
-      ...extraOptions,
-    });
+    const main = new Main(otherOptions, [
+      ...(otherOptions.project ? ["--project", otherOptions.project] : []),
+      ...cmd.args,
+    ]);
     process.on("SIGINT", () => {
       main
         .stop()

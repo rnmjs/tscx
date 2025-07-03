@@ -19,17 +19,8 @@ export function remove({ filepath }: { filepath: string }) {
   return spawn([REMOVE_PATH, filepath]);
 }
 
-export function tsc(options: Record<string, string | boolean>) {
-  return spawn([
-    TSC_PATH,
-    ...Object.entries(options).flatMap(([key, value]) =>
-      value === false
-        ? []
-        : value === true
-          ? [`--${key}`]
-          : [`--${key}`, value],
-    ),
-  ]);
+export function tsc(options: string[]) {
+  return spawn([TSC_PATH, ...options]);
 }
 
 export function copyfiles({
