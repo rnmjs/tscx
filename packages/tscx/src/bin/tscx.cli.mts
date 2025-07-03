@@ -32,8 +32,9 @@ new Command()
   )
   .option("-v, --version", "Print the compiler's version.")
   .option("-h, --help", "Display help for command.")
+  .argument("[paths...]", "File paths to compile.")
   .allowUnknownOption()
-  .action(async (options, cmd: Command) => {
+  .action(async (args, options, cmd: Command) => {
     if (options.version) {
       const version: string = JSON.parse(
         await fs.readFile(
@@ -61,7 +62,7 @@ new Command()
     const { watch, ...otherOptions } = options;
     const main = new Main(otherOptions, [
       ...(otherOptions.project ? ["--project", otherOptions.project] : []),
-      ...cmd.args,
+      ...args,
     ]);
     process.on("SIGINT", () => {
       main
