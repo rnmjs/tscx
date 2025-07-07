@@ -43,7 +43,7 @@ describe("tsconfig-utils", () => {
 
   it("getOutDir", () => {
     // 1.
-    expect(() => getOutDir({})).toThrow('"outDir" is not found');
+    expect(getOutDir({})).toBe(undefined);
 
     // 2.
     expect(() => getOutDir({ compilerOptions: { outDir: "." } })).toThrow(

@@ -37,7 +37,7 @@ export function getRootDir(tsconfig: TsConfig): string {
 export function getOutDir(tsconfig: TsConfig) {
   const outDir = tsconfig.compilerOptions?.outDir;
   if (!outDir) {
-    throw new Error('"outDir" is not found');
+    return undefined;
   }
   const absoluteOutDir = path.resolve(process.cwd(), outDir);
   if (process.cwd().startsWith(absoluteOutDir)) {

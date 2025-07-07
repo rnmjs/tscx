@@ -1,6 +1,6 @@
 import os from "node:os";
 import chokidar from "chokidar";
-import { TaskQueue } from "./task-queue.ts";
+import { TaskQueue, type TaskQueueOptions } from "./task-queue.ts";
 import {
   getInclude,
   getOutDir,
@@ -28,7 +28,7 @@ export class Main {
 
   private readonly tsconfigPath: string;
   private readonly rootDir: string;
-  private readonly outDir: string;
+  private readonly outDir: string | undefined;
   private readonly include: string[];
 
   constructor(options: MainOptions, tscOptions: string[]) {
@@ -55,6 +55,9 @@ export class Main {
   }
 
   watch() {
+    if (!this.outDir) {
+      throw new Error("`outDir` in tsconfig is required for watch mode");
+    }
     // TODO: Rethinking the watch files. Each of them below is reasonable. Scope: `process.cwd()` >= `rootDir` >= `include`.
     // 1. Watch the `include`.
     // 2. Watch the `process.cwd()`.
@@ -113,12 +116,32 @@ export class Main {
   }
 
   private newQueue() {
+    let removeConfig: TaskQueueOptions["removeConfig"] | undefined = undefined;
+    let copyfilesConfig: TaskQueueOptions["copyfilesConfig"] | undefined =
+      undefined;
+    if (this.remove) {
+      if (!this.outDir) {
+        throw new Error(
+          "`outDir` is required in tsconfig to remove compilation output",
+        );
+      }
+      removeConfig = { filepath: this.outDir };
+    }
+    if (this.copyfiles) {
+      if (!this.outDir) {
+        throw new Error(
+          "`outDir` is required in tsconfig to copy non-js files to compilation output`",
+        );
+      }
+      copyfilesConfig = {
+        rootDir: this.rootDir,
+        outDir: this.outDir,
+      };
+    }
     return new TaskQueue({
       tscConfig: this.tscOptions,
-      ...(this.remove ? { removeConfig: { filepath: this.outDir } } : {}),
-      ...(this.copyfiles
-        ? { copyfilesConfig: { rootDir: this.rootDir, outDir: this.outDir } }
-        : {}),
+      ...removeConfig,
+      ...copyfilesConfig,
       ...(this.exec ? { execConfig: { filepath: this.exec } } : {}),
     });
   }
