@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.6
+
+### Patch Changes
+
+- e6303fd: feat: allow absent `--outDir` in some situations
+
 ## 0.3.5
 
 ### Patch Changes
