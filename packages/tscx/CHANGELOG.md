@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.7
+
+### Patch Changes
+
+- 0c46638: fix: fix --remove and --copyfiles options not working
+
 ## 0.3.6
 
 ### Patch Changes
