@@ -140,8 +140,8 @@ export class Main {
     }
     return new TaskQueue({
       tscConfig: this.tscOptions,
-      ...removeConfig,
-      ...copyfilesConfig,
+      ...(removeConfig ? { removeConfig } : {}),
+      ...(copyfilesConfig ? { copyfilesConfig } : {}),
       ...(this.exec ? { execConfig: { filepath: this.exec } } : {}),
     });
   }
