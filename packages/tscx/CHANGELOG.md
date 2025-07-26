@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.8
+
+### Patch Changes
+
+- 6f760a5: feat: use built-in tsc path when it's fail to resolve tsc path in current directory
+
 ## 0.3.7
 
 ### Patch Changes
