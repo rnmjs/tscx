@@ -13,7 +13,7 @@ export interface TsConfig {
 }
 
 export function getTsConfig(project?: string): TsConfig {
-  const cmd = `node ${tscPath} --showConfig${project ? ` --project ${project}` : ""}`;
+  const cmd = `${process.execPath} ${tscPath} --showConfig${project ? ` --project ${project}` : ""}`;
   const config: TsConfig = JSON.parse(
     childProcess.execSync(cmd).toString("utf8"),
   );

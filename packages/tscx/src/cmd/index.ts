@@ -1,5 +1,6 @@
 import childProcess from "node:child_process";
 import path from "node:path";
+import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { tscPath } from "../common.ts";
 import { debug } from "../debug.ts";
@@ -12,7 +13,7 @@ const TSC_PATH = tscPath;
 function spawn(args: string[]) {
   // TODO: use util.styleText when dropping node 18 support
   debug(`👕 [${new Date().toLocaleString()}] node`, ...args);
-  return childProcess.spawn("node", args, { stdio: "inherit" });
+  return childProcess.spawn(process.execPath, args, { stdio: "inherit" });
 }
 
 export function remove({ filepath }: { filepath: string }) {

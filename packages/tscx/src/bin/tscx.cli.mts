@@ -48,7 +48,9 @@ new Command()
         ),
       ).version;
       const tscVersion = childProcess
-        .execSync(`node ${tscPath} --version`, { encoding: "utf8" })
+        .execSync(`${process.execPath} ${tscPath} --version`, {
+          encoding: "utf8",
+        })
         .trim();
       console.log(`${version} (TypeScript ${tscVersion})`);
       return;
@@ -56,7 +58,9 @@ new Command()
     if (options.help) {
       cmd.outputHelp();
       console.log(`\n${"=".repeat(process.stdout.columns)}\n`);
-      childProcess.spawnSync("node", [tscPath, "--help"], { stdio: "inherit" });
+      childProcess.spawnSync(process.execPath, [tscPath, "--help"], {
+        stdio: "inherit",
+      });
       return;
     }
     const { watch, ...otherOptions } = options;
