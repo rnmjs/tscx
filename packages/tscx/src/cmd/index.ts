@@ -5,9 +5,10 @@ import { fileURLToPath } from "node:url";
 import { tscPath } from "../common.ts";
 import { debug } from "../debug.ts";
 
+const jsOrTs = import.meta.url.endsWith(".ts") ? "ts" : "js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REMOVE_PATH = path.resolve(__dirname, "remove.cli.mjs");
-const COPYFILES_PATH = path.resolve(__dirname, "copyfiles.cli.mjs");
+const REMOVE_PATH = path.resolve(__dirname, `remove.cli.m${jsOrTs}`);
+const COPYFILES_PATH = path.resolve(__dirname, `copyfiles.cli.m${jsOrTs}`);
 const TSC_PATH = tscPath;
 
 function spawn(args: string[]) {
