@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.9
+
+### Patch Changes
+
+- 637ee2f: feat: support `--exclude` option
+
 ## 0.3.8
 
 ### Patch Changes
