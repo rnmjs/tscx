@@ -30,6 +30,10 @@ new Command()
     "-e, --exec <path>",
     "Execute or restart the specified js file after every successful compilation.",
   )
+  .option(
+    "--exclude <patterns...>",
+    "Exclude files matching the given patterns from compilation.",
+  )
   .option("-v, --version", "Print the compiler's version.")
   .option("-h, --help", "Display help for command.")
   .argument("[paths...]", "File paths to compile.")
@@ -63,9 +67,10 @@ new Command()
       });
       return;
     }
-    const { watch, ...otherOptions } = options;
+    const { watch, exclude, ...otherOptions } = options;
     const main = new Main(otherOptions, [
       ...(otherOptions.project ? ["--project", otherOptions.project] : []),
+      ...(exclude ? ["--exclude", ...exclude] : []),
       ...args,
     ]);
     process.on("SIGINT", () => {

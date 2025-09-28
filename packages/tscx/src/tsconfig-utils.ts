@@ -101,3 +101,46 @@ export function getTsConfigPath(project?: string) {
     `Could not find a tsconfig.json file at ${dirOrFile1} or ${dirOrFile2}`,
   );
 }
+
+/**
+ * Create a temporary tsconfig file with exclude patterns
+ * @param originalTsconfigPath Path to the original tsconfig file
+ * @param excludePatterns Array of exclude patterns to add
+ * @returns Path to the temporary tsconfig file
+ */
+export function createTempTsConfig(
+  originalTsconfigPath: string,
+  excludePatterns: string[],
+): string {
+  const originalConfig: TsConfig = JSON.parse(
+    fs.readFileSync(originalTsconfigPath, "utf8"),
+  );
+  const tempConfig: TsConfig = {
+    ...originalConfig,
+    exclude: excludePatterns,
+  };
+
+  const tempConfigPath = path.join(
+    path.dirname(originalTsconfigPath),
+    `tsconfig.tscx-temp-${Date.now()}.json`,
+  );
+  fs.writeFileSync(tempConfigPath, JSON.stringify(tempConfig, null, 2));
+
+  return tempConfigPath;
+}
+
+/**
+ * Clean up temporary tsconfig file
+ * @param tempTsconfigPath Path to the temporary tsconfig file
+ */
+export function cleanupTempTsConfig(tempTsconfigPath: string): void {
+  try {
+    if (fs.existsSync(tempTsconfigPath)) {
+      fs.unlinkSync(tempTsconfigPath);
+    }
+  } catch {
+    console.warn(
+      `Warning: Failed to cleanup temporary tsconfig file: ${tempTsconfigPath}`,
+    );
+  }
+}

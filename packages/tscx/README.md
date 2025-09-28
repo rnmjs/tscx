@@ -55,6 +55,7 @@ Now you can simplify your `package.json` by using this library 😄.
 - ✅ Additionally support `--remove` for removing output folder before every compilation.
 - ✅ Additionally support `--copyfiles` for copying non-ts and non-js files to output folder after every compilation.
 - ✅ Additionally support `--exec <path>` for executing js file after compilation success.
+- ✅ Additionally support `--exclude <patterns...>` for excluding files from compilation. Inspired by [this issue](https://github.com/microsoft/TypeScript/issues/46005).
 - 🚨 [outDir](https://www.typescriptlang.org/tsconfig/#outDir) is required in `tsconfig` if you are using `--remove`, `--copyfiles` or `--watch`.
 
 ## Install
