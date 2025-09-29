@@ -93,6 +93,10 @@ $ npx tscx --project tsconfig.build.json --watch --exec bootstrap.js
 $ npx tscx --project tsconfig.build.json --remove --copyfiles --watch --exec bootstrap.js
 ```
 
+> Note: If the values of `--include` or `--exclude` are glob patterns, you need to wrap them with single quotes. For example:
+>
+> `npx tscx --include src --exclude '**/*.test.ts' '**/*.spec.ts'`
+
 ## Contributing
 
 - Clone this repository.
