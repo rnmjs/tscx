@@ -29,7 +29,7 @@
   ],
   "scripts": {
     "build": "node ./src/bin/tscx.cli.mts --include src --exclude '**/*.test.ts'",
-    "test": "vitest run --coverage --coverage.reporter=json-summary --coverage.reporter=html && make-coverage-badge --output-path badge/coverage.svg"
+    "test": "tsc --noEmit && vitest run --coverage --coverage.reporter=json-summary --coverage.reporter=html && make-coverage-badge --output-path badge/coverage.svg"
   },
   "dependencies": {
     "chokidar": "3.6.0",

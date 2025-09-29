@@ -41,12 +41,18 @@ describe("TaskQueue", () => {
     vi.clearAllMocks();
 
     // Default mock implementations
-    mockRemove.mockReturnValue(mockChildProcess as childProcess.ChildProcess);
-    mockTsc.mockReturnValue(mockChildProcess as childProcess.ChildProcess);
-    mockCopyfiles.mockReturnValue(
-      mockChildProcess as childProcess.ChildProcess,
+    mockRemove.mockReturnValue(
+      mockChildProcess as unknown as childProcess.ChildProcess,
     );
-    mockExec.mockReturnValue(mockChildProcess as childProcess.ChildProcess);
+    mockTsc.mockReturnValue(
+      mockChildProcess as unknown as childProcess.ChildProcess,
+    );
+    mockCopyfiles.mockReturnValue(
+      mockChildProcess as unknown as childProcess.ChildProcess,
+    );
+    mockExec.mockReturnValue(
+      mockChildProcess as unknown as childProcess.ChildProcess,
+    );
   });
 
   afterEach(() => {
@@ -414,13 +420,17 @@ describe("TaskQueue", () => {
       const mockExecProcess = { on: vi.fn(), kill: vi.fn() };
 
       mockRemove.mockReturnValue(
-        mockRemoveProcess as childProcess.ChildProcess,
+        mockRemoveProcess as unknown as childProcess.ChildProcess,
       );
-      mockTsc.mockReturnValue(mockTscProcess as childProcess.ChildProcess);
+      mockTsc.mockReturnValue(
+        mockTscProcess as unknown as childProcess.ChildProcess,
+      );
       mockCopyfiles.mockReturnValue(
-        mockCopyfilesProcess as childProcess.ChildProcess,
+        mockCopyfilesProcess as unknown as childProcess.ChildProcess,
       );
-      mockExec.mockReturnValue(mockExecProcess as childProcess.ChildProcess);
+      mockExec.mockReturnValue(
+        mockExecProcess as unknown as childProcess.ChildProcess,
+      );
 
       const taskQueue = new TaskQueue(options);
       taskQueue.start();

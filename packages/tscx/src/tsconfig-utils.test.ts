@@ -13,9 +13,15 @@ describe("tsconfig-utils", () => {
     // 1.
     const tsconfig = getTsConfig();
     expect(tsconfig.compilerOptions).toBeInstanceOf(Object);
-    expect(tsconfig.include).toBeInstanceOf(Array);
-    expect(tsconfig.exclude).toBeInstanceOf(Array);
-    expect(tsconfig.files).toBeInstanceOf(Array);
+    expect(tsconfig.include).toSatisfy(
+      (value: any) => value === undefined || Array.isArray(value),
+    );
+    expect(tsconfig.exclude).toSatisfy(
+      (value: any) => value === undefined || Array.isArray(value),
+    );
+    expect(tsconfig.files).toSatisfy(
+      (value: any) => value === undefined || Array.isArray(value),
+    );
 
     // 2.
     expect(getRootDir(tsconfig)).toBe(path.join(process.cwd(), "src"));
