@@ -1,5 +1,11 @@
 # @rnm/tscx
 
+## 0.3.10
+
+### Patch Changes
+
+- eefbb64: feat: support `--include` option
+
 ## 0.3.9
 
 ### Patch Changes
