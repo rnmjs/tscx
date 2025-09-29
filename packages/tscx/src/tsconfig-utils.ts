@@ -103,22 +103,34 @@ export function getTsConfigPath(project?: string) {
 }
 
 /**
- * Create a temporary tsconfig file with exclude patterns
+ * Create a temporary tsconfig file with exclude and/or include patterns
  * @param originalTsconfigPath Path to the original tsconfig file
- * @param excludePatterns Array of exclude patterns to add
+ * @param excludePatterns Array of exclude patterns to add (optional)
+ * @param includePatterns Array of include patterns to add (optional)
  * @returns Path to the temporary tsconfig file
  */
 export function createTempTsConfig(
   originalTsconfigPath: string,
-  excludePatterns: string[],
+  excludePatterns?: string[],
+  includePatterns?: string[],
 ): string {
   const originalConfig: TsConfig = JSON.parse(
     fs.readFileSync(originalTsconfigPath, "utf8"),
   );
+
   const tempConfig: TsConfig = {
     ...originalConfig,
-    exclude: excludePatterns,
   };
+
+  // Add exclude patterns if provided
+  if (excludePatterns && excludePatterns.length > 0) {
+    tempConfig.exclude = excludePatterns;
+  }
+
+  // Add include patterns if provided
+  if (includePatterns && includePatterns.length > 0) {
+    tempConfig.include = includePatterns;
+  }
 
   const tempConfigPath = path.join(
     path.dirname(originalTsconfigPath),

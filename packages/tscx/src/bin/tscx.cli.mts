@@ -34,6 +34,10 @@ new Command()
     "--exclude <patterns...>",
     "Exclude files matching the given patterns from compilation.",
   )
+  .option(
+    "--include <patterns...>",
+    "Include files matching the given patterns in compilation.",
+  )
   .option("-v, --version", "Print the compiler's version.")
   .option("-h, --help", "Display help for command.")
   .argument("[paths...]", "File paths to compile.")
@@ -67,10 +71,11 @@ new Command()
       });
       return;
     }
-    const { watch, exclude, ...otherOptions } = options;
+    const { watch, exclude, include, ...otherOptions } = options;
     const main = new Main(otherOptions, [
       ...(otherOptions.project ? ["--project", otherOptions.project] : []),
       ...(exclude ? ["--exclude", ...exclude] : []),
+      ...(include ? ["--include", ...include] : []),
       ...args,
     ]);
     process.on("SIGINT", () => {

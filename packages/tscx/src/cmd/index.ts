@@ -26,25 +26,44 @@ export function remove({ filepath }: { filepath: string }) {
   return spawn([REMOVE_PATH, filepath]);
 }
 
-export function tsc(options: string[]) {
-  const excludeIndex = options.findIndex((opt) => opt === "--exclude");
-  const nextOptionIndex = options.findIndex(
-    (opt, index) => index > excludeIndex && opt.startsWith("-"),
-  );
-  const excludePatterns: string[] =
-    excludeIndex < 0
-      ? []
-      : options.filter((_, i) =>
-          nextOptionIndex < 0
-            ? i > excludeIndex
-            : i > excludeIndex && i < nextOptionIndex,
-        );
+/**
+ * Extract patterns for a given option (--exclude or --include)
+ * @param options Command line options array
+ * @param optionName The option name to extract patterns for
+ * @returns Object containing the patterns and the option index
+ */
+function extractOptionPatterns(options: string[], optionName: string) {
+  const optionIndex = options.findIndex((opt) => opt === optionName);
+  if (optionIndex < 0) {
+    return { patterns: [], optionIndex: -1 };
+  }
 
-  if (excludePatterns.length <= 0) {
+  const nextOptionIndex = options.findIndex(
+    (opt, index) => index > optionIndex && opt.startsWith("-"),
+  );
+
+  const patterns: string[] = options.filter((_, i) =>
+    nextOptionIndex < 0
+      ? i > optionIndex
+      : i > optionIndex && i < nextOptionIndex,
+  );
+
+  return { patterns, optionIndex };
+}
+
+export function tsc(options: string[]) {
+  const excludeResult = extractOptionPatterns(options, "--exclude");
+  const includeResult = extractOptionPatterns(options, "--include");
+
+  const hasExcludePatterns = excludeResult.patterns.length > 0;
+  const hasIncludePatterns = includeResult.patterns.length > 0;
+
+  // If no custom exclude or include patterns, use original tsc
+  if (!hasExcludePatterns && !hasIncludePatterns) {
     return spawn([TSC_PATH, ...options]);
   }
 
-  // 1. Create temporary tsconfig with exclude patterns & modify options
+  // 1. Create temporary tsconfig with exclude/include patterns & modify options
   const modifiedOptions = [...options];
   const projectIndex = modifiedOptions.findIndex(
     (opt) => opt === "--project" || opt === "-p",
@@ -52,14 +71,44 @@ export function tsc(options: string[]) {
   const originalTsconfigPath = getTsConfigPath(
     projectIndex > -1 ? modifiedOptions[projectIndex + 1] : undefined,
   );
+
   const tempTsconfigPath = createTempTsConfig(
     originalTsconfigPath,
-    excludePatterns,
+    hasExcludePatterns ? excludeResult.patterns : undefined,
+    hasIncludePatterns ? includeResult.patterns : undefined,
   );
-  // Remove --exclude and excludePatterns from modifiedOptions
-  modifiedOptions.splice(excludeIndex, excludePatterns.length + 1);
+
+  // Remove --exclude/--include and their patterns from modifiedOptions
+  // Process in reverse order to avoid index shifting issues
+  const optionsToRemove = [
+    ...(hasExcludePatterns
+      ? [
+          {
+            index: excludeResult.optionIndex,
+            length: excludeResult.patterns.length + 1,
+          },
+        ]
+      : []),
+    ...(hasIncludePatterns
+      ? [
+          {
+            index: includeResult.optionIndex,
+            length: includeResult.patterns.length + 1,
+          },
+        ]
+      : []),
+  ].sort((a, b) => b.index - a.index); // Sort in descending order
+  for (const { index, length } of optionsToRemove) {
+    modifiedOptions.splice(index, length);
+  }
+
   if (projectIndex > -1) {
-    modifiedOptions[projectIndex + 1] = tempTsconfigPath;
+    // Find the new project index after removals
+    const newProjectIndex = modifiedOptions.findIndex(
+      (opt) => opt === "--project" || opt === "-p",
+    );
+    // newProjectIndex must > -1
+    modifiedOptions[newProjectIndex + 1] = tempTsconfigPath;
   } else {
     modifiedOptions.unshift("--project", tempTsconfigPath);
   }
