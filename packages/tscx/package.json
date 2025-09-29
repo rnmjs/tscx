@@ -28,7 +28,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "node --experimental-strip-types ./src/bin/tscx.cli.mts",
+    "build": "node ./src/bin/tscx.cli.mts --include src --exclude '**/*.test.ts'",
     "test": "vitest run --coverage --coverage.reporter=json-summary --coverage.reporter=html && make-coverage-badge --output-path badge/coverage.svg"
   },
   "dependencies": {
